@@ -1,0 +1,66 @@
+# version: "3"
+# services:
+#   backend:
+#     build:
+#       context: ./backend
+#     volumes:
+#       - ./temp_code:/usr/src/temp_code
+#     ports:
+#       - "3000:3000"
+#     networks:
+#       - code_network
+
+#   python-compiler:
+#     build:
+#       context: ./python
+#     volumes:
+#       - ./temp_code:/usr/src/temp_code
+#     networks:
+#       - code_network
+
+#   nodejs-compiler:
+#     build:
+#       context: ./nodejs
+#     volumes:
+#       - ./temp_code:/usr/src/temp_code
+#     networks:
+#       - code_network
+
+# networks:
+#   code_network:
+#     driver: bridge
+
+version: "3"
+services:
+  backend:
+    build:
+      context: ./backend  # Path to your backend Dockerfile
+    volumes:
+      - temp_code:/usr/src/temp_code  # Using a named volume
+    ports:
+      - "3000:3000"  # Exposes port 3000 on the host
+    networks:
+      - code_network  # Connects to the defined network
+
+  python-compiler:
+    build:
+      context: ./python  # Path to your Python Dockerfile
+    volumes:
+      - temp_code:/usr/src/temp_code  # Using the same named volume
+    networks:
+      - code_network  # Connects to the defined network
+
+  nodejs-compiler:
+    build:
+      context: ./nodejs  # Path to your Node.js Dockerfile
+    volumes:
+      - temp_code:/usr/src/temp_code  # Using the same named volume
+    networks:
+      - code_network  # Connects to the defined network
+
+networks:
+  code_network:
+    driver: bridge  # Use bridge networking
+
+volumes:
+  temp_code:  # Define the named volume

@@ -1,0 +1,1 @@
+print.log("Hello from fuck")
